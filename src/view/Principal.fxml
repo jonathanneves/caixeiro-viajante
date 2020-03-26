@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="551.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
+   <top>
+      <Label text="Algoritmo Genético" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Arial Bold" size="30.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <TabPane fx:id="tabPane" prefHeight="408.0" prefWidth="492.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Configuração">
+            <content>
+              <AnchorPane prefHeight="302.0" prefWidth="452.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="192.0" prefWidth="416.0" spacing="10.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="Nova Cidade:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="inputCidade" />
+                                    <Button mnemonicParsing="false" onAction="#adicionarNovaCidade" text="ADD">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="192.0" prefWidth="416.0" spacing="10.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label text="Condição de Parada:">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <RadioButton fx:id="rbGeracao" mnemonicParsing="false" text="Geração">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="condicao" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rbAuto" mnemonicParsing="false" selected="true" text="Automático" toggleGroup="$condicao">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="192.0" prefWidth="416.0" spacing="10.0">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#iniciarAlgoritmoGenetico" text="Iniciar">
+                                       <font>
+                                          <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Label contentDisplay="CENTER" text="Para deletar uma cidade basta cliqua na linha desejada" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tableCidade" onMousePressed="#deletarLinha" prefHeight="450.0" prefWidth="482.0">
+                                <columns>
+                                  <TableColumn fx:id="columnCidade" prefWidth="481.0" text="Cidades" />
+                                </columns>
+                              </TableView>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Mapa de Distâncias">
+            <content>
+              <AnchorPane prefHeight="371.0" prefWidth="492.0">
+                     <children>
+                        <TableView fx:id="tableTempo" prefHeight="385.0" prefWidth="491.0">
+                          <columns>
+                            <TableColumn fx:id="columnCidadeA" prefWidth="173.0" text="Cidade A" />
+                            <TableColumn fx:id="columnCidadeB" prefWidth="180.0" text="Cidade B" />
+                              <TableColumn fx:id="columnTempo" prefWidth="136.0" text="Tempo" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <bottom>
+      <Label fx:id="lblResultado" prefHeight="70.0" prefWidth="482.0" textAlignment="CENTER" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Label>
+   </bottom>
+</BorderPane>
