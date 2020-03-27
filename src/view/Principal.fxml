@@ -95,6 +95,7 @@
                               </Label>
                               <TableView fx:id="tableCidade" onMousePressed="#deletarLinha" prefHeight="450.0" prefWidth="482.0">
                                 <columns>
+                                    <TableColumn fx:id="columnLetra" prefWidth="75.0" text="Letra" />
                                   <TableColumn fx:id="columnCidade" prefWidth="481.0" text="Cidades" />
                                 </columns>
                               </TableView>

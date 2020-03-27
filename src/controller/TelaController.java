@@ -26,18 +26,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Label;
+import model.Cidade;
 import model.Tempo;
 
 public class TelaController implements Initializable {
 
-	List<String> cidades = new ArrayList<String>();
+	List<Cidade> cidades = new ArrayList<Cidade>();
 	List<Tempo> tempos = new ArrayList<Tempo>();
 	
 	/* TABELA COM CIDADES */
 	@FXML
-	private TableView<String> tableCidade;
+	private TableView<Cidade> tableCidade;
 	@FXML
-	private TableColumn<String, String> columnCidade;
+	private TableColumn<Cidade, String> columnCidade;
+	@FXML
+	private TableColumn<Cidade, String> columnLetra;
 	
 	/* MAPA DE DISTÂNCIA */
 	@FXML
@@ -63,7 +66,8 @@ public class TelaController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		columnCidade.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
+		columnCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
+		columnLetra.setCellValueFactory(new PropertyValueFactory<>("letra"));
 		columnCidadeA.setCellValueFactory(new PropertyValueFactory<>("cidadeA"));
 		columnCidadeB.setCellValueFactory(new PropertyValueFactory<>("cidadeB"));
 		columnTempo.setCellValueFactory(new PropertyValueFactory<>("tempo"));
@@ -75,14 +79,13 @@ public class TelaController implements Initializable {
 			String novaCidade = inputCidade.getText();
 			
 			if(!novaCidade.contains("->") || !novaCidade.isEmpty()) {
-				if(!cidades.contains(novaCidade)){
-					populaListaETabelaCidade();
-				} else {
+					populaListaETabelaCidade(novaCidade);
+				/*} else {
 					exibeMsg("Cidade Duplicada!", 
 							"Esta cidade já existe na lista tente outro nome", 
 							"Não foi possível salvar a cidade.", 
 							AlertType.WARNING);
-				}
+				}*/
 			} else {
 				exibeMsg("Nome de Cidade Inválido!", 
 						"Nome da cidade não pode ter '->' ou não pode ser vazio.", 
@@ -125,8 +128,8 @@ public class TelaController implements Initializable {
 		tabPane.getSelectionModel().selectNext();
 	}
 	
-	private void populaListaETabelaCidade() {
-		cidades.add(inputCidade.getText());
+	private void populaListaETabelaCidade(String novaCidade) {
+		cidades.add(new Cidade(Character.toString((char)(65+cidades.size())),novaCidade));
         tableCidade.setItems(FXCollections.observableArrayList(cidades));
         inputCidade.clear();
 	}
@@ -136,7 +139,7 @@ public class TelaController implements Initializable {
 		for(int i = 0; i<cidades.size(); i++) {
 			for(int j = i; j<cidades.size(); j++) {
 				if(!cidades.get(i).equals(cidades.get(j))) {
-					int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i)+"' e a Cidade '"+cidades.get(j)+"'"));
+					int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
 					tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));
 					tempos.add(new Tempo(cidades.get(j),cidades.get(i),tempo));
 				} else {
@@ -148,7 +151,7 @@ public class TelaController implements Initializable {
 	
 	@FXML
 	private void deletarLinha() {
-		String cidadeSelecionada = tableCidade.getSelectionModel().getSelectedItem();
+		Cidade cidadeSelecionada = tableCidade.getSelectionModel().getSelectedItem();
 		cidades.remove(cidadeSelecionada);
 		tableCidade.setItems(FXCollections.observableArrayList(cidades));
 	}

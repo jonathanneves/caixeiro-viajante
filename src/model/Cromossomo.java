@@ -23,12 +23,14 @@ public class Cromossomo {
 		String[] cidades = caminho.split("->");
 		for(Tempo t : tempos){
 			for(int j=0; j<cidades.length-1; j++) {
-				if(t.getCidadeA().equals(cidades[j]) && t.getCidadeB().equals(cidades[j+1])) {
+				if(t.getCidadeA().getLetra().equals(cidades[j]) 
+						&& t.getCidadeB().getLetra().equals(cidades[j+1])) {
 					fitness += t.getTempo();
 				}
 			}
 			//Adicionar o tempo da ultima cidade com a primeira
-			if(t.getCidadeA().equals(cidades[cidades.length-1]) && t.getCidadeB().equals(cidades[0])) {
+			if(t.getCidadeA().getLetra().equals(cidades[cidades.length-1]) 
+					&& t.getCidadeB().getLetra().equals(cidades[0])) {
 				fitness += t.getTempo();
 			}
 		}

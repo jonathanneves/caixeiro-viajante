@@ -2,35 +2,42 @@ package model;
 
 public class Tempo {
 
-	String cidadeA;
-	String cidadeB;
+	Cidade cidadeA;
+	Cidade cidadeB;
 	int tempo;
 	
 	
-	public Tempo(String cidadeA, String cidadeB, int tempo) {
+	public Tempo(Cidade cidadeA, Cidade cidadeB, int tempo) {
 		this.cidadeA = cidadeA;
 		this.cidadeB = cidadeB;
 		this.tempo = tempo;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "Distancia [cidadeA=" + cidadeA + ", cidadeB=" + cidadeB + ", Tempo=" + tempo + "min.]";
+		return "Distancia [cidadeA=" + cidadeA.getCidade() + ", cidadeB=" + cidadeB.getCidade() + ", Tempo=" + tempo + "min.]";
 	}
 
-	public String getCidadeA() {
+	
+	public Cidade getCidadeA() {
 		return cidadeA;
 	}
-	public void setCidadeA(String cidadeA) {
+
+
+	public void setCidadeA(Cidade cidadeA) {
 		this.cidadeA = cidadeA;
 	}
-	public String getCidadeB() {
+
+
+	public Cidade getCidadeB() {
 		return cidadeB;
 	}
-	public void setCidadeB(String cidadeB) {
+
+
+	public void setCidadeB(Cidade cidadeB) {
 		this.cidadeB = cidadeB;
 	}
+
 
 	public int getTempo() {
 		return tempo;

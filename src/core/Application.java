@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import model.Cidade;
 import model.Cromossomo;
 import model.Tempo;
 
@@ -15,11 +16,11 @@ public class Application {
 	public int geracao = 0;
 
 	public List<Cromossomo> cromossomos = new ArrayList<Cromossomo>(); //Permutação
-	public List<String> cidades = new ArrayList<String>();
+	public List<Cidade> cidades = new ArrayList<Cidade>();
 	public List<Tempo> tempos = new ArrayList<Tempo>();
 	
 	//INICIANDO TODO O PROCESSO DO ALGORITMO GENETICO POR GERAÇÕES
-	public void iniciar(int geracaoMax, List<Tempo> tempos, List<String> cidades) {	
+	public void iniciar(int geracaoMax, List<Tempo> tempos, List<Cidade> cidades) {	
 		this.tempos = tempos;
 		this.cidades = cidades;
 	
@@ -61,8 +62,8 @@ public class Application {
 			Collections.shuffle(cidades);
 			String caminho = "";			
 			//SEPARA CAMINHOS COM ;
-			for(String c : cidades) {
-				caminho += c+"->";
+			for(Cidade c : cidades) {
+				caminho += c.getLetra()+"->";
 			}
 			
 			cromossomos.add(new Cromossomo(caminho, tempos));
@@ -115,24 +116,23 @@ public class Application {
 				}
 			}
 		}
-		System.out.println(posInvalido1 + "---"+posInvalido2);
 
 		//FAZENDO A TROCA DE CAMINHOS INVALIDOS (REPETINDO CIDADE)
-		for(String c : cidades) {
+		for(Cidade c : cidades) {
 			Boolean jaExiste1 = false;
 			Boolean jaExiste2 = false;
 			for(int i=0; i<cidades.size(); i++) {
-				if(c.equals(crossovers1[i]))
+				if(c.getLetra().equals(crossovers1[i]))
 					jaExiste1=true;
-				if(c.equals(crossovers2[i]))
+				if(c.getLetra().equals(crossovers2[i]))
 					jaExiste2=true;
 			}
 			if(!jaExiste1 && posInvalido1 != -1) {
-				crossovers1[posInvalido1] = c;
+				crossovers1[posInvalido1] = c.getLetra();
 				posInvalido1 = -1;
 			}
 			if(!jaExiste2 && posInvalido2 != -1) {
-				crossovers2[posInvalido2] = c;	
+				crossovers2[posInvalido2] = c.getLetra();	
 				posInvalido2 = -1;
 			}
 
