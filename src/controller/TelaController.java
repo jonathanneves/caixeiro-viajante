@@ -79,7 +79,7 @@ public class TelaController implements Initializable {
 		if(cidades.size() < 10) {
 			String novaCidade = inputCidade.getText();
 			
-			if(!novaCidade.contains("->") || !novaCidade.isEmpty()) {
+			if(!novaCidade.contains("->") && !novaCidade.isEmpty()) {
 					populaListaETabelaCidade(novaCidade);
 			} else {
 				exibeMsg("Nome de Cidade Inválido!", 
@@ -108,7 +108,7 @@ public class TelaController implements Initializable {
 			Application app = new Application();
 			app.iniciar(geracao, tempos, cidades);
 			
-			lblResultado.setText(app.melhorIndividuo()+"\n Nrº de gerações: "+app.getGeracao());
+			lblResultado.setText(app.melhorIndividuo());
 				
 		} else {
 			exibeMsg("Número de Cidade Inválido!", 

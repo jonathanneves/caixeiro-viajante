@@ -33,9 +33,9 @@ public class Application {
 			}
 		}
 		else {
-			int menorFitness = 999;
+			int menorFitness = Integer.MAX_VALUE;
 			int contador = 0;
-			while(contador<100) {
+			while(contador<50) {
 				System.out.println("--------------------GERAÇÃO: "+(geracao+1)+"----------------------");
 				iniciarAlgoritmoGenetico();
 				contador++;
@@ -43,6 +43,7 @@ public class Application {
 				if(c.getFitness() < menorFitness) {
 					menorFitness = c.getFitness();
 					contador = 0;
+					System.out.println(">>>"+menorFitness);
 				}
 			}
 		}
@@ -60,8 +61,9 @@ public class Application {
 		System.out.println("-----------------GERANCO POPULAÇÃO---------------------");
 		for(int i=0; i<2; i++) {
 			Collections.shuffle(cidades);
-			String caminho = "";			
-			//SEPARA CAMINHOS COM ;
+			String caminho = "";		
+			
+			//SEPARA CIDADES COM ->
 			for(Cidade c : cidades) {
 				caminho += c.getLetra()+"->";
 			}
@@ -75,131 +77,87 @@ public class Application {
 	public void crossover() {	
 	
 		System.out.println("----------------------CROSSOVER----------------------");
+
+		String[] parent1 = cromossomos.get(0).getCaminho().split("->");
+		String[] parent2 = cromossomos.get(1).getCaminho().split("->");
 		
-		Random gerador = new Random();
-		int corte = gerador.nextInt(cidades.size()); 
-		System.out.println("Corte: "+corte);
+		//Gerar 2 filhos através do crossover NWOX
+		String[] child1 = crossoverNWOX(parent1, parent2);
+		String[] child2 = crossoverNWOX(parent2, parent1);
 		
-		String[] cidades1 = cromossomos.get(0).getCaminho().split("->");
-		String[] cidades2 = cromossomos.get(1).getCaminho().split("->");
-				
-		//REALIZANDO O CROSSOVER ENTRE OS 2 CROMOSSOMOS (OPERADOR PMX)
+		//Gerando a String caminho através do vetor
 		String crossover1 = "";
 		String crossover2 = "";
-		
-		crossover1 = "";
-		crossover2 = "";
-			
-		for(int i=0; i<cidades.size(); i++) {
-			if(i<=corte) {
-				crossover1 += cidades1[i]+"->";
-				crossover2 += cidades2[i]+"->";
-			}else{
-				crossover2 += cidades1[i]+"->";
-				crossover1 += cidades2[i]+"->";
-			}
-		}
-		
-		String[] crossovers1 = crossover1.split("->");
-		String[] crossovers2 = crossover2.split("->");
-		
-		
-		//VERIFICANDO SE É CAMINHO VÁLIDO
-		Boolean crossoverInvalido1 = false;
-		Boolean crossoverInvalido2 = false;
-
-		for(int i=0; i<cidades.size(); i++) {
-			for(int j=i+1; j<cidades.size(); j++) {
-				if(i != j) {
-					if(crossovers1[i].equals(crossovers1[j])) 
-						crossoverInvalido1 = true;
-					if(crossovers2[i].equals(crossovers2[j])) 
-						crossoverInvalido2 = true;
-				}
-			}
+		for(int k=0; k<cidades.size(); k++) {
+			crossover1 += child1[k]+"->";
+			crossover2 += child2[k]+"->";
 		}
 
-		/*//FAZENDO A TROCA DE CAMINHOS INVALIDOS (REPETINDO CIDADE)
-		for(Cidade c : cidades) {
-			Boolean jaExiste1 = false;
-			Boolean jaExiste2 = false;
-			for(int i=0; i<cidades.size(); i++) {
-				if(c.getLetra().equals(crossovers1[i]))
-					jaExiste1=true;
-				if(c.getLetra().equals(crossovers2[i]))
-					jaExiste2=true;
-			}
-			if(!jaExiste1 && posInvalido1 != -1) {
-				crossovers1[posInvalido1] = c.getLetra();
-				posInvalido1 = -1;
-			}
-			if(!jaExiste2 && posInvalido2 != -1) {
-				crossovers2[posInvalido2] = c.getLetra();	
-				posInvalido2 = -1;
-			}
-
-		}*/
-		
-		crossover1 = "";
-		crossover2 = "";
-		for(int i=0; i<cidades.size(); i++) {
-			crossover1 += crossovers1[i]+"->";
-			crossover2 += crossovers2[i]+"->";
-		}
-		
-		//Adicinando o novo Crossover 1 a lista de Cromossomos
-		if(crossoverInvalido1)
-			cromossomos.add(new Cromossomo(crossover1, Integer.MAX_VALUE));
-		else
-			cromossomos.add(new Cromossomo(crossover1, tempos));
-			
-		//Adicinando o novo Crossover 2 a lista de Cromossomos
-		if(crossoverInvalido2)
-			cromossomos.add(new Cromossomo(crossover2, Integer.MAX_VALUE));
-		else
-			cromossomos.add(new Cromossomo(crossover2, tempos));
+		cromossomos.add(new Cromossomo(crossover1, tempos));
+		cromossomos.add(new Cromossomo(crossover2, tempos));
 
 		cromossomos.forEach(System.out::println);
 	}
+	
+	//Non-Wrapping Ordered Crossover (NWOX)
+	private String[] crossoverNWOX(String[] parent1, String[] parent2) {
+		String[] child = new String[cidades.size()];
+		
+		//Pega 2 posições aleatorios parar criar um novo crossover
+		Random gerador = new Random();		
+		int start = 0, end = 0;
+		start = gerador.nextInt(cidades.size()-1);
+		end = gerador.nextInt(((cidades.size()-1)-start)+1)+start; //Numero entre start e o máximo
+		
+		//Gera 1 crossover pegando as cidades entre o ponto inicial até o ponto final
+		int index=0;
+		for(int i=0; i<cidades.size(); i++) {
+			if(i>=start && i<=end) {
+				child[index] = parent1[i];
+				index++;
+			}
+		}
 
+		//Verifica se o crossover contem a cidade do outro pai, senão completa a lista adicionando-o
+		for(int i=0; i<cidades.size(); i++) {
+			if(!Arrays.asList(child).contains(parent2[i])) {
+				child[index] = parent2[i];
+				index++;
+			}
+		}
+		
+		return child;
+	}
+
+	//REALIZA MUTAÇÃO NO PIOR INDIVIDUO
 	public void mutacao() {
 		System.out.println("----------------------MUTAÇÃO----------------------");
+
+		Cromossomo c = Collections.max(cromossomos, Comparator.comparing(s -> s.getFitness()));
 		Random gerador = new Random();
-		Collections.shuffle(cromossomos);
 		
+		//Pegando duas posições aleatórias diferentes para trocar de lugar durante a mutação
 		int posA = 0; 
 		int posB = 0;
 		while(posA == posB) {
-			posA = gerador.nextInt(cidades.size());
-			posB = gerador.nextInt(cidades.size());
+			posA = gerador.nextInt(cidades.size()-1);
+			posB = gerador.nextInt(cidades.size()-1);
 		}
 		
-		String[] mutacao =  cromossomos.get(0).getCaminho().split("->");
+		String[] mutacao = c.getCaminho().split("->");
+		
 		//Realizando a troca de duas posições em apenas um cromossomo.
 		String cidadeAux = mutacao[posA];
 		mutacao[posA] = mutacao[posB];
 		mutacao[posB] = cidadeAux;
 		
+		//Gerando a String caminho através do vetor
 		String novaMutacao = "";
 		for(int j=0; j<mutacao.length; j++) {
 			novaMutacao += mutacao[j]+"->";
 		}
-		
-		//VERIFICANDO SE É CAMINHO VÁLIDO
-		Boolean mutacaoInvalida = false;
-		for(int i=0; i<cidades.size(); i++) {
-			for(int j=i+1; j<cidades.size(); j++) {
-				if(i != j) {
-					if(mutacao[i].equals(mutacao[j])) 
-						mutacaoInvalida = true;
-				}
-			}
-		}
-		
-		if(mutacaoInvalida)
-			cromossomos.set(0, new Cromossomo(novaMutacao, Integer.MAX_VALUE));
-		else
-			cromossomos.set(0, new Cromossomo(novaMutacao, tempos));
+
+		cromossomos.set(cromossomos.indexOf(c),new Cromossomo(novaMutacao, tempos));
 
 		cromossomos.forEach(System.out::println);
 	}
@@ -218,10 +176,6 @@ public class Application {
 		System.out.println("-----------MELHOR CAMINHO-------------");
 		Cromossomo c = Collections.min(cromossomos, Comparator.comparing(s -> s.getFitness()));
 		System.out.println("O Menor "+c);
-		return "O Menor "+c;
-	}
-	
-	public int getGeracao() {
-		return geracao;
+		return "O Menor "+c+"\n Nrº de gerações: "+geracao;
 	}
 }
