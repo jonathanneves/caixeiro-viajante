@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -18,10 +19,13 @@
 
 <BorderPane prefHeight="551.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
    <top>
-      <Label text="Algoritmo Genético" BorderPane.alignment="CENTER">
+      <Label prefHeight="53.0" prefWidth="279.0" text="Algoritmo Genético" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
             <Font name="Arial Bold" size="30.0" />
          </font>
+         <effect>
+            <DropShadow color="#003cff" height="5.0" radius="2.0" width="5.0" />
+         </effect>
       </Label>
    </top>
    <center>
@@ -81,9 +85,14 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#iniciarAlgoritmoGenetico" text="Iniciar">
+                                    <Button mnemonicParsing="false" onAction="#iniciarAlgoritmoGenetico" text="Iniciar Algoritmo Genético" textFill="#006507">
                                        <font>
                                           <Font name="Arial Bold" size="15.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="219.0" layoutY="20.0" mnemonicParsing="false" onAction="#limparTudo" text="Limpar Tudo" textFill="RED">
+                                       <font>
+                                          <Font name="Arial" size="15.0" />
                                        </font>
                                     </Button>
                                  </children>

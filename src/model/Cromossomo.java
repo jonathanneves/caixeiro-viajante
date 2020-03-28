@@ -12,6 +12,11 @@ public class Cromossomo {
 		this.fitness = calcularFitnessTotal(tempos);
 	}
 		
+	public Cromossomo(String caminho, int fitness) {
+		this.caminho = caminho;
+		this.fitness = fitness;
+	}
+		
 	@Override
 	public String toString() {
 		String[] cidades = caminho.split("->");

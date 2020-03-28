@@ -3,6 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -80,12 +81,6 @@ public class TelaController implements Initializable {
 			
 			if(!novaCidade.contains("->") || !novaCidade.isEmpty()) {
 					populaListaETabelaCidade(novaCidade);
-				/*} else {
-					exibeMsg("Cidade Duplicada!", 
-							"Esta cidade já existe na lista tente outro nome", 
-							"Não foi possível salvar a cidade.", 
-							AlertType.WARNING);
-				}*/
 			} else {
 				exibeMsg("Nome de Cidade Inválido!", 
 						"Nome da cidade não pode ter '->' ou não pode ser vazio.", 
@@ -100,6 +95,7 @@ public class TelaController implements Initializable {
 		
 		if(cidades.size() > 2) {
 			
+			cidades.sort(Comparator.comparing(Cidade::getLetra));
 			preencherListaTempo();	
 			populaTabela();
 	
@@ -122,6 +118,15 @@ public class TelaController implements Initializable {
 		}
 	}
 	
+	@FXML
+	private void limparTudo() {
+		tempos.clear();
+		cidades.clear();
+        tableCidade.setItems(FXCollections.observableArrayList(cidades));
+		tableTempo.setItems(FXCollections.observableArrayList(tempos));
+		lblResultado.setText("");
+	}
+	
 	private void populaTabela() {
 		tableTempo.getItems().clear();
 		tableTempo.setItems(FXCollections.observableArrayList(tempos));
@@ -133,17 +138,19 @@ public class TelaController implements Initializable {
         tableCidade.setItems(FXCollections.observableArrayList(cidades));
         inputCidade.clear();
 	}
-
+	
 	private void preencherListaTempo() {
-		tempos.clear();
-		for(int i = 0; i<cidades.size(); i++) {
-			for(int j = i; j<cidades.size(); j++) {
-				if(!cidades.get(i).equals(cidades.get(j))) {
-					int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
-					tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));
-					tempos.add(new Tempo(cidades.get(j),cidades.get(i),tempo));
-				} else {
-					tempos.add(new Tempo(cidades.get(i),cidades.get(i),0));
+
+		if(tempos.isEmpty()) {
+			for(int i = 0; i<cidades.size(); i++) {
+				for(int j = i; j<cidades.size(); j++) {
+					if(!cidades.get(i).equals(cidades.get(j))) {
+						int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
+						tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));
+						tempos.add(new Tempo(cidades.get(j),cidades.get(i),tempo));
+					} else {
+						tempos.add(new Tempo(cidades.get(i),cidades.get(i),0));
+					}
 				}
 			}
 		}

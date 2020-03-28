@@ -35,7 +35,7 @@ public class Application {
 		else {
 			int menorFitness = 999;
 			int contador = 0;
-			while(contador<15) {
+			while(contador<100) {
 				System.out.println("--------------------GERAÇÃO: "+(geracao+1)+"----------------------");
 				iniciarAlgoritmoGenetico();
 				contador++;
@@ -103,21 +103,23 @@ public class Application {
 		String[] crossovers1 = crossover1.split("->");
 		String[] crossovers2 = crossover2.split("->");
 		
-		int posInvalido1 = -1;
-		int posInvalido2 = -1;
+		
 		//VERIFICANDO SE É CAMINHO VÁLIDO
+		Boolean crossoverInvalido1 = false;
+		Boolean crossoverInvalido2 = false;
+
 		for(int i=0; i<cidades.size(); i++) {
 			for(int j=i+1; j<cidades.size(); j++) {
 				if(i != j) {
 					if(crossovers1[i].equals(crossovers1[j])) 
-						posInvalido1 = j;
+						crossoverInvalido1 = true;
 					if(crossovers2[i].equals(crossovers2[j])) 
-						posInvalido2 = j;
+						crossoverInvalido2 = true;
 				}
 			}
 		}
 
-		//FAZENDO A TROCA DE CAMINHOS INVALIDOS (REPETINDO CIDADE)
+		/*//FAZENDO A TROCA DE CAMINHOS INVALIDOS (REPETINDO CIDADE)
 		for(Cidade c : cidades) {
 			Boolean jaExiste1 = false;
 			Boolean jaExiste2 = false;
@@ -136,7 +138,7 @@ public class Application {
 				posInvalido2 = -1;
 			}
 
-		}
+		}*/
 		
 		crossover1 = "";
 		crossover2 = "";
@@ -146,10 +148,16 @@ public class Application {
 		}
 		
 		//Adicinando o novo Crossover 1 a lista de Cromossomos
-		cromossomos.add(new Cromossomo(crossover1, tempos));
+		if(crossoverInvalido1)
+			cromossomos.add(new Cromossomo(crossover1, Integer.MAX_VALUE));
+		else
+			cromossomos.add(new Cromossomo(crossover1, tempos));
 			
 		//Adicinando o novo Crossover 2 a lista de Cromossomos
-		cromossomos.add(new Cromossomo(crossover2, tempos));
+		if(crossoverInvalido2)
+			cromossomos.add(new Cromossomo(crossover2, Integer.MAX_VALUE));
+		else
+			cromossomos.add(new Cromossomo(crossover2, tempos));
 
 		cromossomos.forEach(System.out::println);
 	}
@@ -177,7 +185,21 @@ public class Application {
 			novaMutacao += mutacao[j]+"->";
 		}
 		
-		cromossomos.set(0, new Cromossomo(novaMutacao, tempos));
+		//VERIFICANDO SE É CAMINHO VÁLIDO
+		Boolean mutacaoInvalida = false;
+		for(int i=0; i<cidades.size(); i++) {
+			for(int j=i+1; j<cidades.size(); j++) {
+				if(i != j) {
+					if(mutacao[i].equals(mutacao[j])) 
+						mutacaoInvalida = true;
+				}
+			}
+		}
+		
+		if(mutacaoInvalida)
+			cromossomos.set(0, new Cromossomo(novaMutacao, Integer.MAX_VALUE));
+		else
+			cromossomos.set(0, new Cromossomo(novaMutacao, tempos));
 
 		cromossomos.forEach(System.out::println);
 	}
