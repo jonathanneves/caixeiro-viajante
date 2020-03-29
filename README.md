@@ -1,4 +1,4 @@
-# caixeiro-viajante
+# Caixeiro Viajante / Travelling Salesman
 Algoritmo Genético em JavaFX para resolver o problema do Caixeiro Viajante.
 
 ###### As informações abaixo estão disponível no documento "Documentação Trabalho.docx" de forma mais detalhada!
