@@ -137,6 +137,8 @@ public class TelaController implements Initializable {
 		cidades.add(new Cidade(Character.toString((char)(65+cidades.size())),novaCidade));
         tableCidade.setItems(FXCollections.observableArrayList(cidades));
         inputCidade.clear();
+		tableTempo.getItems().clear();
+		tempos.clear();
 	}
 	
 	private void preencherListaTempo() {
@@ -161,6 +163,8 @@ public class TelaController implements Initializable {
 		Cidade cidadeSelecionada = tableCidade.getSelectionModel().getSelectedItem();
 		cidades.remove(cidadeSelecionada);
 		tableCidade.setItems(FXCollections.observableArrayList(cidades));
+		tableTempo.getItems().clear();
+		tempos.clear();		
 	}
 	
 	private void exibeMsg(String titulo, String cabecalho, String msg, AlertType tipo) {
