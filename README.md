@@ -21,7 +21,7 @@ Algoritmo Genético em JavaFX para resolver o problema do Caixeiro Viajante.
 
 ### 3.	 Qual percentual de mutação genética (caso tenha sido utilizada)
 
-  Não foi utilizado nenhuma taxa de mutação pois foi realizado a mutação selecionando 2 cidades aleatórias de um indivíduo aleatório e trocado de lugar entre si.
+  Não foi utilizado nenhuma taxa de mutação pois foi realizado a mutação selecionando 2 cidades aleatórias do pior indivíduo da geração e trocado de lugar entre si.
 
 **Ex.:** [A->C->B->D] => [A->D->B->C]
 
