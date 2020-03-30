@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="551.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
+<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
    <top>
       <Label prefHeight="53.0" prefWidth="279.0" text="Algoritmo Genético" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
@@ -29,7 +29,7 @@
       </Label>
    </top>
    <center>
-      <TabPane fx:id="tabPane" prefHeight="408.0" prefWidth="492.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="Infinity" BorderPane.alignment="CENTER">
         <tabs>
           <Tab text="Configuração">
             <content>
@@ -97,15 +97,15 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label contentDisplay="CENTER" text="Para deletar uma cidade basta cliqua na linha desejada" textAlignment="CENTER">
+                              <Label text="Edite o nome da cidade clicando no campo desejado. Aperte Enter para Salvar.">
                                  <font>
-                                    <Font name="Arial" size="13.0" />
+                                    <Font name="Arial" size="12.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="tableCidade" onMousePressed="#deletarLinha" prefHeight="450.0" prefWidth="482.0">
+                              <TableView fx:id="tableCidade" editable="true" prefHeight="450.0" prefWidth="482.0">
                                 <columns>
-                                    <TableColumn fx:id="columnLetra" prefWidth="75.0" text="Letra" />
-                                  <TableColumn fx:id="columnCidade" prefWidth="481.0" text="Cidades" />
+                                    <TableColumn fx:id="columnLetra" editable="false" prefWidth="75.0" sortType="DESCENDING" sortable="false" text="Letra" />
+                                  <TableColumn fx:id="columnCidade" prefWidth="406.0" sortable="false" text="Cidades" />
                                 </columns>
                               </TableView>
                            </children>
@@ -121,13 +121,22 @@
             <content>
               <AnchorPane prefHeight="371.0" prefWidth="492.0">
                      <children>
-                        <TableView fx:id="tableTempo" prefHeight="385.0" prefWidth="491.0">
-                          <columns>
-                            <TableColumn fx:id="columnCidadeA" prefWidth="173.0" text="Cidade A" />
-                            <TableColumn fx:id="columnCidadeB" prefWidth="180.0" text="Cidade B" />
-                              <TableColumn fx:id="columnTempo" prefWidth="136.0" text="Tempo" />
-                          </columns>
-                        </TableView>
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="Edite o tempo clicando no campo desejado. Aperte Enter para Salvar.">
+                                 <font>
+                                    <Font name="Arial" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tableTempo" editable="true" prefHeight="385.0" prefWidth="491.0">
+                                <columns>
+                                  <TableColumn fx:id="columnCidadeA" prefWidth="173.0" text="Cidade A" />
+                                  <TableColumn fx:id="columnCidadeB" prefWidth="180.0" text="Cidade B" />
+                                    <TableColumn fx:id="columnTempo" prefWidth="136.0" text="Tempo" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -138,7 +147,7 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <bottom>
-      <Label fx:id="lblResultado" prefHeight="70.0" prefWidth="482.0" textAlignment="CENTER" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
+      <Label fx:id="lblResultado" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" prefHeight="70.0" prefWidth="482.0" textAlignment="CENTER" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>

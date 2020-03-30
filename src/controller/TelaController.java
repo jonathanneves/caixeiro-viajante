@@ -15,15 +15,23 @@ import javax.swing.JOptionPane;
 import core.Application;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Label;
@@ -72,6 +80,33 @@ public class TelaController implements Initializable {
 		columnCidadeA.setCellValueFactory(new PropertyValueFactory<>("cidadeA"));
 		columnCidadeB.setCellValueFactory(new PropertyValueFactory<>("cidadeB"));
 		columnTempo.setCellValueFactory(new PropertyValueFactory<>("tempo"));
+		
+		columnCidade.setCellFactory(TextFieldTableCell.<Cidade>forTableColumn());
+		columnCidade.setOnEditCommit(new EventHandler<CellEditEvent<Cidade, String>>() 
+		{
+		    @Override
+		    public void handle(CellEditEvent<Cidade, String> t) 
+		    {
+		        ((Cidade) t.getTableView().getItems().get(
+		                t.getTablePosition().getRow())
+		                ).setCidade(t.getNewValue());
+		    	tableCidade.setItems(FXCollections.observableArrayList(cidades));
+		    }
+		});
+		
+		columnTempo.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		columnTempo.setOnEditCommit(new EventHandler<CellEditEvent<Tempo, Integer>>() 
+		{
+		    @Override
+		    public void handle(CellEditEvent<Tempo, Integer> t) 
+		    {
+		        ((Tempo) t.getTableView().getItems().get(
+		                t.getTablePosition().getRow())
+		                ).setTempo(t.getNewValue());
+		    	tableTempo.setItems(FXCollections.observableArrayList(tempos));
+		    }
+		});
+		
 	}
 
 	@FXML
@@ -135,6 +170,7 @@ public class TelaController implements Initializable {
 	
 	private void populaListaETabelaCidade(String novaCidade) {
 		cidades.add(new Cidade(Character.toString((char)(65+cidades.size())),novaCidade));
+		Collections.sort(cidades, Comparator.comparing(Cidade::getLetra));
         tableCidade.setItems(FXCollections.observableArrayList(cidades));
         inputCidade.clear();
 		tableTempo.getItems().clear();
@@ -157,16 +193,7 @@ public class TelaController implements Initializable {
 			}
 		}
 	}
-	
-	@FXML
-	private void deletarLinha() {
-		Cidade cidadeSelecionada = tableCidade.getSelectionModel().getSelectedItem();
-		cidades.remove(cidadeSelecionada);
-		tableCidade.setItems(FXCollections.observableArrayList(cidades));
-		tableTempo.getItems().clear();
-		tempos.clear();		
-	}
-	
+
 	private void exibeMsg(String titulo, String cabecalho, String msg, AlertType tipo) {
 		Alert alert = new Alert(tipo);
 		alert.setTitle(titulo);
