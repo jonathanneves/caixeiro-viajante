@@ -26,16 +26,16 @@ public class Application {
 	
 		gerarPopulacao();
 		//INICIANDO MUTAÇÂO e CROSSOVER
-		if(geracaoMax > 0) {
+		if(geracaoMax > 0) {	//POR NUMERO DE GERAÇÕES
 			while(geracao < geracaoMax) {
 				System.out.println("--------------------GERAÇÃO: "+(geracao+1)+"----------------------");
 				iniciarAlgoritmoGenetico();
 			}
 		}
-		else {
+		else {	//AUTOMÁTICO: ELE SÓ FINALIZA SE NAO ACHAR MELHOR RESULTADO EM 50 GERAÇÕES
 			int menorFitness = Integer.MAX_VALUE;
 			int contador = 0;
-			while(contador<50) {
+			while(contador<=50) {
 				System.out.println("--------------------GERAÇÃO: "+(geracao+1)+"----------------------");
 				iniciarAlgoritmoGenetico();
 				contador++;
@@ -174,8 +174,18 @@ public class Application {
 			
 	public String melhorIndividuo() {
 		System.out.println("-----------MELHOR CAMINHO-------------");
-		Cromossomo c = Collections.min(cromossomos, Comparator.comparing(s -> s.getFitness()));
-		System.out.println("O Menor "+c);
-		return "O Menor "+c+"\n Nrº de gerações: "+geracao;
+		Cromossomo result = Collections.min(cromossomos, Comparator.comparing(s -> s.getFitness()));
+		System.out.println("O Menor "+result+" Nrº de gerações: \"+geracao");
+		
+		String caminho = "";
+		String[] mutacao = result.getCaminho().split("->");
+		for(Cidade cid : cidades) {
+			for(int i = 0; i<cidades.size(); i++) {
+				if(mutacao[i].equals(cid.getLetra()))
+					caminho += cid.getCidade() +"->";
+			}
+		}
+		caminho += cidades.get(0).getCidade();
+		return "Melhor Caminho: "+caminho+"\nDistância Total: "+result.getFitness()+"\nNrº de gerações: "+geracao;
 	}
 }

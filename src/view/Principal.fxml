@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
+<BorderPane prefHeight="556.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaController">
    <top>
       <Label prefHeight="53.0" prefWidth="279.0" text="Algoritmo Genético" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
@@ -147,12 +147,12 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <bottom>
-      <Label fx:id="lblResultado" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" prefHeight="70.0" prefWidth="482.0" textAlignment="CENTER" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
+      <Label fx:id="lblResultado" contentDisplay="CENTER" ellipsisString="" prefHeight="79.0" prefWidth="482.0" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
          <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
       </Label>
    </bottom>
