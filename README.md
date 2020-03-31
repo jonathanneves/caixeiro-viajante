@@ -29,9 +29,9 @@ Algoritmo Genético em JavaFX para resolver o problema do Caixeiro Viajante.
   
 ### 4.	Como se deu o método de seleção dos indivíduos para reprodução no momento de estabelecer as próximas gerações
 
-  Os 4 indivíduos são avaliados com base no seu fitness e são escolhidos os 2 indivíduos com menor tempo (o mais apto) entre os 4 da geração atual para gerar descendentes para a próxima população. Logo o objetivo do problema é encontrar a sequência de cidades com o menor tempo.
+  Os 4 indivíduos são avaliados com base no seu fitness e são escolhidos e mantidos os 2 indivíduos com menor tempo (o mais apto) entre os 4 da geração atual para gerar descendentes para a próxima população. Logo o objetivo do problema é encontrar a sequência de cidades com o menor tempo.
 
-  O algoritmo inicia a geração com 2 indivíduos, e gera mais dois indivíduos através do crossover, e por fim realiza a mutação em um deles, finalizando com 4 indivíduos. No final é escolhido apenas os 2 indivíduos mais apto que serão mantidos para a próxima geração e repete o processo até cumprir o critério de parada.
+  O algoritmo inicia a geração com 2 indivíduos, e gera mais dois indivíduos através do crossover, e por fim realiza a mutação no pior indivíduo, finalizando com 4 indivíduos. No final é escolhido apenas os 2 indivíduos mais apto que serão mantidos para a próxima geração e repete o processo até cumprir o critério de parada.
 
   Para o crossover foi utilizado *Non-Wrapping Ordered Crossover (NWOX)*. Consiste em pegar uma posição inicial e uma posição final, e adicionar todos os valores presente no pai entre estas posições ao filho. Após isso, é preciso completar o indivíduo com as cidades restantes, então é realizado uma verificação se o filho 1 não contém a cidade do pai 2, ou vice-versa, então é adicionado ao indivíduo.
   
