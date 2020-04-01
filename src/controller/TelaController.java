@@ -184,7 +184,7 @@ public class TelaController implements Initializable {
 			for(int i = 0; i<cidades.size(); i++) {
 				for(int j = i; j<cidades.size(); j++) {
 					if(!cidades.get(i).equals(cidades.get(j))) {
-						int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
+						int tempo = Integer.parseInt(inputDialog("Tempo em minutos entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
 						tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));				
 					} else {
 						tempos.add(new Tempo(cidades.get(i),cidades.get(i),0));

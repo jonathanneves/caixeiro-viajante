@@ -20,7 +20,7 @@ public class Cromossomo {
 	@Override
 	public String toString() {
 		String[] cidades = caminho.split("->");
-		return "Caminho= "+ caminho +""+cidades[0]+ " Distância Total= " + fitness;
+		return "Caminho= "+ caminho +""+cidades[0]+ " Tempo Total= " + fitness;
 	}
 
 	public int calcularFitnessTotal(List<Tempo> tempos) {

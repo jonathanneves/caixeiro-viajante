@@ -191,6 +191,6 @@ public class Application {
 			}
 		}
 		
-		return "Melhor Caminho: "+caminho+"\nDistância Total: "+result.getFitness()+" - Nrº de gerações: "+geracao;
+		return "Melhor Caminho: "+caminho+"\nTempo Total: "+result.getFitness()+"min. - Nrº de gerações: "+geracao;
 	}
 }
