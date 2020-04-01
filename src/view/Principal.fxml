@@ -149,7 +149,7 @@
    <bottom>
       <Label fx:id="lblResultado" contentDisplay="CENTER" ellipsisString="" prefHeight="79.0" prefWidth="482.0" textFill="#076b00" wrapText="true" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Arial Bold" size="16.0" />
+            <Font name="Arial Bold" size="15.0" />
          </font>
          <BorderPane.margin>
             <Insets left="5.0" right="5.0" top="5.0" />

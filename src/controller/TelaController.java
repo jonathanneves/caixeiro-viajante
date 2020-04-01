@@ -90,6 +90,7 @@ public class TelaController implements Initializable {
 		        ((Cidade) t.getTableView().getItems().get(
 		                t.getTablePosition().getRow())
 		                ).setCidade(t.getNewValue());
+		        cidades.sort(Comparator.comparing(Cidade::getLetra));
 		    	tableCidade.setItems(FXCollections.observableArrayList(cidades));
 		    }
 		});
@@ -184,8 +185,7 @@ public class TelaController implements Initializable {
 				for(int j = i; j<cidades.size(); j++) {
 					if(!cidades.get(i).equals(cidades.get(j))) {
 						int tempo = Integer.parseInt(inputDialog("Tempo entre a Cidade '"+cidades.get(i).getCidade()+"' e a Cidade '"+cidades.get(j).getCidade()+"'"));
-						tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));
-						tempos.add(new Tempo(cidades.get(j),cidades.get(i),tempo));
+						tempos.add(new Tempo(cidades.get(i),cidades.get(j),tempo));				
 					} else {
 						tempos.add(new Tempo(cidades.get(i),cidades.get(i),0));
 					}

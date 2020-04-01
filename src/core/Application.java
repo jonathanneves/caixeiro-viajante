@@ -175,17 +175,22 @@ public class Application {
 	public String melhorIndividuo() {
 		System.out.println("-----------MELHOR CAMINHO-------------");
 		Cromossomo result = Collections.min(cromossomos, Comparator.comparing(s -> s.getFitness()));
-		System.out.println("O Menor "+result+" Nrº de gerações: \"+geracao");
+		System.out.println("O Menor "+result+" Nrº de gerações: "+geracao);
 		
 		String caminho = "";
 		String[] mutacao = result.getCaminho().split("->");
-		for(Cidade cid : cidades) {
-			for(int i = 0; i<cidades.size(); i++) {
+		for(int i = 0; i<cidades.size(); i++) {
+			for(Cidade cid : cidades) {
 				if(mutacao[i].equals(cid.getLetra()))
 					caminho += cid.getCidade() +"->";
 			}
 		}
-		caminho += cidades.get(0).getCidade();
-		return "Melhor Caminho: "+caminho+"\nDistância Total: "+result.getFitness()+"\nNrº de gerações: "+geracao;
+		for(Cidade cid : cidades) {
+			if(mutacao[0].equals(cid.getLetra())) {
+				caminho += cid.getCidade();
+			}
+		}
+		
+		return "Melhor Caminho: "+caminho+"\nDistância Total: "+result.getFitness()+" - Nrº de gerações: "+geracao;
 	}
 }
