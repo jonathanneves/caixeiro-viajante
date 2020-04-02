@@ -11,7 +11,7 @@ import model.Cidade;
 import model.Cromossomo;
 import model.Tempo;
 
-public class Application {
+public class AlgoritmoGenetico {
 
 	public int geracao = 0;
 

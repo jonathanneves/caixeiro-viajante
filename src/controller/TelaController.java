@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import core.Application;
+import core.AlgoritmoGenetico;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -131,17 +131,17 @@ public class TelaController implements Initializable {
 		
 		if(cidades.size() > 2) {
 			
-			cidades.sort(Comparator.comparing(Cidade::getLetra));
-			preencherListaTempo();	
-			populaTabela();
-	
 			int geracao = 0;
 			if(rbGeracao.isSelected()) {	
 				while(geracao == 0) 
 					geracao = Integer.parseInt(inputDialog("Quantas gerações você deseja? (Maior que zero)"));
 			}
 			
-			Application app = new Application();
+			cidades.sort(Comparator.comparing(Cidade::getLetra));
+			preencherListaTempo();	
+			populaTabela();
+	
+			AlgoritmoGenetico app = new AlgoritmoGenetico();
 			app.iniciar(geracao, tempos, cidades);
 			
 			lblResultado.setText(app.melhorIndividuo());
